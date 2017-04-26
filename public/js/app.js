@@ -18086,8 +18086,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -18097,6 +18095,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
+    submitUpload: function submitUpload() {
+      this.$refs.upload.submit();
+    },
     handleRemove: function handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -20590,13 +20591,7 @@ exports = module.exports = __webpack_require__(9)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-/***/ }),
+/* 85 */,
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -80383,10 +80378,6 @@ module.exports = Component.exports
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(117)
-
 var Component = __webpack_require__(17)(
   /* script */
   __webpack_require__(79),
@@ -80541,28 +80532,37 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('el-row', [_c('el-col', {
-    attrs: {
-      "span": 4,
-      "offset": 4
-    }
-  }, [_c('el-upload', {
+  return _c('el-upload', {
+    ref: "upload",
     staticClass: "upload-demo",
     attrs: {
-      "action": "https://jsonplaceholder.typicode.com/posts/",
+      "action": "/api/upload",
       "on-preview": _vm.handlePreview,
       "on-remove": _vm.handleRemove,
-      "file-list": _vm.fileList
+      "file-list": _vm.fileList,
+      "auto-upload": false
     }
   }, [_c('el-button', {
     attrs: {
       "size": "small",
       "type": "primary"
+    },
+    slot: "trigger"
+  }, [_vm._v("选取文件")]), _vm._v(" "), _c('el-button', {
+    staticStyle: {
+      "margin-left": "10px"
+    },
+    attrs: {
+      "size": "small",
+      "type": "success"
+    },
+    on: {
+      "click": _vm.submitUpload
     }
-  }, [_vm._v("点击上传")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("上传到服务器")]), _vm._v(" "), _c('div', {
     staticClass: "el-upload__tip",
     slot: "tip"
-  }, [_vm._v("只能上传jpg/png文件，且不超过500kb")])], 1)], 1)], 1)
+  }, [_vm._v("只能上传jpg/png文件，且不超过500kb")])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -80599,32 +80599,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(85);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(33)("2cff3a76", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a4015d0a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./upload.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a4015d0a\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./upload.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 117 */,
 /* 118 */
 /***/ (function(module, exports) {
 

@@ -54,6 +54,31 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        'qiniu' => [
+          'driver'  => 'qiniu',
+          'domains' => [
+            'default'   => env('qnURL'), //你的七牛域名
+            'https'     => '',         //你的HTTPS域名
+            'custom'    => '',                //你的自定义域名
+          ],
+          'access_key'=> env('AK'),  //AccessKey
+          'secret_key'=> env('SK'),  //SecretKey
+          'bucket'    => env('bucket'),  //Bucket名字
+          'notify_url'=> '',  //持久化处理回调地址
+        ],
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => 'stud.gxy.lsu.edu.cn',
+            'username' => 'yzstud',
+            'password' => 'yzstud',
+
+            // Optional FTP Settings...
+            // 'port'     => 21,
+            // 'root'     => '',
+            // 'passive'  => true,
+            // 'ssl'      => true,
+            // 'timeout'  => 30,
+        ],
 
         's3' => [
             'driver' => 's3',

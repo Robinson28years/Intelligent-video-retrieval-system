@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//use App\Http\Controllers\QiniuController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+//Route::get('/upload', 'QiniuController@upload');
+
