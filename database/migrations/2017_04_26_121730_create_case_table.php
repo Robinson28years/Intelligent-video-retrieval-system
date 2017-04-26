@@ -13,7 +13,7 @@ class CreateCaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('case', function (Blueprint $table) {
+        Schema::create('lawcase', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -26,10 +26,10 @@ class CreateCaseTable extends Migration
             $table->dateTime('start');
             $table->string('label');
             $table->string('status');
-            $table->integer('case_id')->unsigned();
-            $table->foreign('case_id')
+            $table->integer('lawcase_id')->unsigned();
+            $table->foreign('lawcase_id')
                 ->references('id')
-                ->on('case')
+                ->on('lawcase')
                 ->onDelete('cascade');
             $table->timestamps();
         });

@@ -18122,10 +18122,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    axios.get('api/allcase').then(function (response) {
+      console.log(response.data);
+    });
+  },
   data: function data() {
     return {
+      value: '',
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
       form: {
         name: '',
         region: '',
@@ -20648,7 +20695,13 @@ exports = module.exports = __webpack_require__(9)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
-/* 85 */,
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(9)();
+exports.push([module.i, "\n.el-row[data-v-a4015d0a] {\r\n  margin-top: 20px;\r\n  margin-bottom: 20px;\n&:last-child {\r\n    margin-bottom: 0;\n}\n}\r\n", ""]);
+
+/***/ }),
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -80435,13 +80488,17 @@ module.exports = Component.exports
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(117)
+
 var Component = __webpack_require__(17)(
   /* script */
   __webpack_require__(79),
   /* template */
   __webpack_require__(115),
   /* scopeId */
-  null,
+  "data-v-a4015d0a",
   /* cssModules */
   null
 )
@@ -80589,37 +80646,60 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('el-row', [_c('el-upload', {
-    ref: "upload",
+  return _c('el-row', [_c('el-row', {
+    attrs: {
+      "type": "flex",
+      "justify": "center"
+    }
+  }, [
+    [_c('el-select', {
+      attrs: {
+        "placeholder": "请选择案件"
+      },
+      model: {
+        value: (_vm.value),
+        callback: function($$v) {
+          _vm.value = $$v
+        },
+        expression: "value"
+      }
+    }, _vm._l((_vm.options), function(item) {
+      return _c('el-option', {
+        attrs: {
+          "label": item.label,
+          "value": item.value
+        }
+      })
+    }))], _vm._v(" "), _c('el-button', {
+      attrs: {
+        "type": "primary",
+        "icon": "edit"
+      }
+    }, [_vm._v("新建案件")])
+  ], 2), _vm._v(" "), _c('el-row', {
+    attrs: {
+      "type": "flex",
+      "justify": "center"
+    }
+  }, [_c('el-upload', {
     staticClass: "upload-demo",
     attrs: {
-      "action": "/api/upload",
-      "on-preview": _vm.handlePreview,
-      "on-remove": _vm.handleRemove,
-      "file-list": _vm.fileList,
+      "drag": "",
       "on-success": _vm.success,
-      "auto-upload": false
+      "file-list": _vm.fileList,
+      "action": "/api/upload",
+      "multiple": ""
     }
-  }, [_c('el-button', {
+  }, [_c('i', {
+    staticClass: "el-icon-upload"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "el-upload__text"
+  }, [_vm._v("将文件拖到此处，或"), _c('em', [_vm._v("点击上传")])]), _vm._v(" "), _c('div', {
+    staticClass: "el-upload__tip",
+    slot: "tip"
+  }, [_vm._v("只能上传视频文件，且不超过2G")])])], 1), _vm._v(" "), _c('el-dialog', {
     attrs: {
-      "size": "small",
-      "type": "primary"
-    },
-    slot: "trigger"
-  }, [_vm._v("选取文件")]), _vm._v(" "), _c('el-button', {
-    staticStyle: {
-      "margin-left": "10px"
-    },
-    attrs: {
-      "size": "small",
-      "type": "success"
-    },
-    on: {
-      "click": _vm.submitUpload
-    }
-  }, [_vm._v("上传到服务器")])], 1), _vm._v(" "), _c('el-dialog', {
-    attrs: {
-      "title": "收货地址"
+      "title": "视频详情"
     },
     model: {
       value: (_vm.dialogFormVisible),
@@ -80783,7 +80863,32 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */,
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(85);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(33)("5242469a", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a4015d0a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./upload.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a4015d0a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./upload.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 118 */
 /***/ (function(module, exports) {
 
