@@ -19,6 +19,6 @@ class QiniuController extends Controller
 //        dd($request->file('file'));
         // dd($this->disk->get('test/uQqqhyTHZSwDZr8hJKRLzq4ibF428QtQxBy9r6dp.jpeg'));
 //            dd($this->disk->exists('video/5j66qpaQfBxRZ4Kn7sa8oWAYKJauR0JP3NlBIDzV.jpeg'));
-       dd($this->disk->put('test',$request->file('file')));
+       return $this->disk->put('test',$request->file('file'));
     }
 }

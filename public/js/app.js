@@ -18086,17 +18086,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
+      dialogFormVisible: false,
+      // fileList: []
       fileList: [{ name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }, { name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100' }]
     };
   },
 
   methods: {
+    success: function success(response, file, fileList) {
+      console.log(response);
+      console.log(file);
+      this.dialogFormVisible = true;
+    },
     submitUpload: function submitUpload() {
       this.$refs.upload.submit();
+    },
+    onSubmit: function onSubmit() {
+      console.log(this.fileList);
+      console.log('submit!');
     },
     handleRemove: function handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -80532,7 +80589,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('el-upload', {
+  return _c('el-row', [_c('el-upload', {
     ref: "upload",
     staticClass: "upload-demo",
     attrs: {
@@ -80540,6 +80597,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "on-preview": _vm.handlePreview,
       "on-remove": _vm.handleRemove,
       "file-list": _vm.fileList,
+      "on-success": _vm.success,
       "auto-upload": false
     }
   }, [_c('el-button', {
@@ -80559,10 +80617,136 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.submitUpload
     }
-  }, [_vm._v("上传到服务器")]), _vm._v(" "), _c('div', {
-    staticClass: "el-upload__tip",
-    slot: "tip"
-  }, [_vm._v("只能上传jpg/png文件，且不超过500kb")])], 1)
+  }, [_vm._v("上传到服务器")])], 1), _vm._v(" "), _c('el-dialog', {
+    attrs: {
+      "title": "收货地址"
+    },
+    model: {
+      value: (_vm.dialogFormVisible),
+      callback: function($$v) {
+        _vm.dialogFormVisible = $$v
+      },
+      expression: "dialogFormVisible"
+    }
+  }, [_c('el-col', {
+    attrs: {
+      "span": 10,
+      "offset": 5
+    }
+  }, [_c('el-form', {
+    ref: "form",
+    attrs: {
+      "model": _vm.form,
+      "label-width": "80px"
+    }
+  }, [_c('el-form-item', {
+    attrs: {
+      "label": "视频名称"
+    }
+  }, [_c('el-input', {
+    model: {
+      value: (_vm.form.name),
+      callback: function($$v) {
+        _vm.form.name = $$v
+      },
+      expression: "form.name"
+    }
+  })], 1), _vm._v(" "), _c('el-form-item', {
+    attrs: {
+      "label": "经纬度"
+    }
+  }, [_c('el-select', {
+    attrs: {
+      "placeholder": "请选择活动区域"
+    },
+    model: {
+      value: (_vm.form.region),
+      callback: function($$v) {
+        _vm.form.region = $$v
+      },
+      expression: "form.region"
+    }
+  }, [_c('el-option', {
+    attrs: {
+      "label": "区域一",
+      "value": "shanghai"
+    }
+  }), _vm._v(" "), _c('el-option', {
+    attrs: {
+      "label": "区域二",
+      "value": "beijing"
+    }
+  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
+    attrs: {
+      "label": "监控时间"
+    }
+  }, [_c('el-col', {
+    attrs: {
+      "span": 11
+    }
+  }, [_c('el-date-picker', {
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "type": "date",
+      "placeholder": "选择日期"
+    },
+    model: {
+      value: (_vm.form.date1),
+      callback: function($$v) {
+        _vm.form.date1 = $$v
+      },
+      expression: "form.date1"
+    }
+  })], 1), _vm._v(" "), _c('el-col', {
+    staticClass: "line",
+    attrs: {
+      "span": 2
+    }
+  }, [_vm._v("-")]), _vm._v(" "), _c('el-col', {
+    attrs: {
+      "span": 11
+    }
+  }, [_c('el-time-picker', {
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "type": "fixed-time",
+      "placeholder": "选择时间"
+    },
+    model: {
+      value: (_vm.form.date2),
+      callback: function($$v) {
+        _vm.form.date2 = $$v
+      },
+      expression: "form.date2"
+    }
+  })], 1)], 1), _vm._v(" "), _c('el-form-item', {
+    attrs: {
+      "label": "队列优先"
+    }
+  }, [_c('el-switch', {
+    attrs: {
+      "on-text": "",
+      "off-text": ""
+    },
+    model: {
+      value: (_vm.form.delivery),
+      callback: function($$v) {
+        _vm.form.delivery = $$v
+      },
+      expression: "form.delivery"
+    }
+  })], 1), _vm._v(" "), _c('el-form-item', [_c('el-button', {
+    attrs: {
+      "type": "primary"
+    },
+    on: {
+      "click": _vm.onSubmit
+    }
+  }, [_vm._v("立即创建")]), _vm._v(" "), _c('el-button', [_vm._v("取消")])], 1)], 1)], 1)], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
