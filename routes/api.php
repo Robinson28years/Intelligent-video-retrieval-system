@@ -22,3 +22,7 @@ Route::post('/addcase','VideoController@addCase');
 Route::post('/addvideo','VideoController@addVideo');
 Route::get('/allvideo/{id}', 'VideoController@allVideo');
 Route::post('/getvideo','QiniuController@getVideo');
+Route::post('/addsmallvideo','VideoController@addSmallvidedo');
+Route::get('/allsmallvideo/{id}', 'VideoController@allSmallvideo');
+Route::get('/lockvideo/{id}', 'VideoController@lockVideo');
+Route::get('/finishvideo/{id}', 'VideoController@finishVideo');

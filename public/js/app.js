@@ -89322,24 +89322,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var amapManager = new __WEBPACK_IMPORTED_MODULE_0_vue_amap__["AMapManager"]();
 var POLYGON_ID = 'POLYGON_ID';
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'demoComponent',
+  computed: {
+    player: function player() {
+      return this.$refs.videoPlayer.player;
+    }
+  },
   created: function created() {
     var _this = this;
 
     axios.get('api/allvideo/1').then(function (response) {
       var k = response.data;
       var i = 0;
-      while (k[i] != null) {
+
+      var _loop = function _loop() {
+        // console.log(k[i].id);
+        var j = k[i].id;
         var marker = {
           position: [k[i].lng, k[i].lat],
           events: {
             click: function click() {
-              alert('click marker2');
+              _this.dialogvideo = true;
+              _this.tableData = [];
+              axios.get('api/allsmallvideo/' + j).then(function (response) {
+                var y = response.data;
+                var u = 0;
+                while (y[u] != null) {
+                  _this.tableData.push(y[u]);
+                  u++;
+                }
+              });
+              axios.post('api/getvideo', {
+                video: 11
+              }).then(function (response) {
+                console.log(_this.playerOptions.sources[0].src);
+                _this.playerOptions.sources[0].src = response.data;
+                // console.log(response.data);
+              });
             }
           },
           visible: true,
@@ -89350,11 +89397,32 @@ var POLYGON_ID = 'POLYGON_ID';
         _this.polyline.path.push(polygon);
         _this.markers.push(marker);
         i = i + 1;
+      };
+
+      while (k[i] != null) {
+        _loop();
       }
     });
   },
   data: function data() {
     return {
+      tableData: [],
+      dialogvideo: false,
+      playerOptions: {
+
+        // component options
+        start: 0,
+        playsinline: false,
+
+        // videojs options
+        muted: true,
+        language: 'zh_cn',
+        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        sources: [{
+          type: "video/flv",
+          src: null
+        }]
+      },
       zoom: 12,
       amapManager: amapManager,
       center: [121.5273285, 31.25515044],
@@ -89472,7 +89540,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.changeEditable
     }
-  }, [_vm._v("change editable")])], 1)
+  }, [_vm._v("change editable")]), _vm._v(" "), _c('el-dialog', {
+    attrs: {
+      "title": "监控视频"
+    },
+    model: {
+      value: (_vm.dialogvideo),
+      callback: function($$v) {
+        _vm.dialogvideo = $$v
+      },
+      expression: "dialogvideo"
+    }
+  }, [_c('video-player', {
+    ref: "videoPlayer",
+    attrs: {
+      "options": _vm.playerOptions
+    }
+  }), _vm._v(" "), _c('el-table', {
+    staticStyle: {
+      "width": "100%"
+    },
+    attrs: {
+      "data": _vm.tableData
+    }
+  }, [_c('el-table-column', {
+    attrs: {
+      "prop": "id",
+      "label": "编号",
+      "width": "180"
+    }
+  }), _vm._v(" "), _c('el-table-column', {
+    attrs: {
+      "prop": "start",
+      "label": "开始",
+      "width": "180"
+    }
+  }), _vm._v(" "), _c('el-table-column', {
+    attrs: {
+      "prop": "end",
+      "label": "结束"
+    }
+  })], 1)], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
