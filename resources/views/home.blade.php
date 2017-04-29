@@ -31,7 +31,7 @@
         <el-col :span="3" >
           <el-menu style="height: 1000px;" router  class="el-menu-vertical-demo" theme="dark">
             <el-menu-item index="/1"><i class="el-icon-menu"></i>视频上传</el-menu-item>
-            <!-- <el-menu-item index="/2"><i class="el-icon-setting"></i>任务查看</el-menu-item> -->
+            <el-menu-item index="/2"><i class="el-icon-setting"></i>任务查看</el-menu-item>
             <el-menu-item index="/3"><i class="el-icon-menu"></i>地图定位</el-menu-item>
           </el-menu>
         </el-col>

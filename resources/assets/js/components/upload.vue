@@ -226,6 +226,7 @@ Date.prototype.Format = function (fmt) {
         }).then(response => {
           this.tableData.push(response.data)
           console.log(response.data);
+          this.dialogFormVisible=false;
         })
       },
       onSubmit2() {

@@ -14,6 +14,10 @@ let routes =[
 				path: '/1',
 				component: require('./components/upload.vue')
 			},
+      {
+				path: '/2',
+				component: require('./components/video.vue')
+			},
 ];
 
 
