@@ -2,15 +2,16 @@
   <el-row>
     <el-row type="flex"  justify="center">
       <template>
-        <el-select v-model="value" placeholder="请选择案件">
+        <el-select @change="select" v-model="value" placeholder="请选择案件">
           <el-option
           v-for="item in options"
+          :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
     </template>
-    <el-button type="primary" icon="edit">新建案件</el-button>
+    <el-button type="primary" icon="edit" @click="newcase">新建案件</el-button>
   </el-row>
   <el-row type="flex"  justify="center">
     <!-- <el-upload
@@ -38,6 +39,38 @@
       <div class="el-upload__tip" slot="tip">只能上传视频文件，且不超过2G</div>
     </el-upload>
   </el-row>
+  <el-row type="flex"  justify="center">
+    <el-table
+  :data="tableData"
+  style="width: 100%">
+  <el-table-column
+    prop="name"
+    label="视频名称"
+    width="180">
+  </el-table-column>
+  <el-table-column
+    prop="lng"
+    label="经度"
+    width="180">
+  </el-table-column>
+  <el-table-column
+    prop="lat"
+    label="纬度">
+  </el-table-column>
+  <el-table-column
+    prop="start"
+    label="监控时间">
+  </el-table-column>
+  <el-table-column
+    prop="label"
+    label="所在目录">
+  </el-table-column>
+  <el-table-column
+    prop="status"
+    label="状态">
+  </el-table-column>
+</el-table>
+  </el-row>
 <el-dialog title="视频详情" v-model="dialogFormVisible">
 <el-col :span="10" :offset="5">
   <el-form ref="form" :model="form" label-width="80px">
@@ -46,93 +79,179 @@
   <el-input v-model="form.name"></el-input>
 </el-form-item>
 <el-form-item label="经纬度">
-  <el-select v-model="form.region" placeholder="请选择活动区域">
-    <el-option label="区域一" value="shanghai"></el-option>
-    <el-option label="区域二" value="beijing"></el-option>
-  </el-select>
-</el-form-item>
-<el-form-item label="监控时间">
   <el-col :span="11">
-    <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+    <el-input v-model="form.lng" placeholder="经度"></el-input>
   </el-col>
   <el-col class="line" :span="2">-</el-col>
   <el-col :span="11">
-    <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
+    <el-input v-model="form.lat" placeholder="纬度"></el-input>
   </el-col>
+</el-form-item>
+<el-form-item label="监控时间">
+    <el-date-picker
+      v-model="form.date"
+      type="datetime"
+      placeholder="选择日期时间"
+      align="right">
+    </el-date-picker>
 </el-form-item>
 <el-form-item label="队列优先">
   <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
 </el-form-item>
 <el-form-item>
   <el-button type="primary" @click="onSubmit">立即创建</el-button>
-  <el-button>取消</el-button>
+  <el-button @click="dialogFormVisible = false">取消</el-button>
 </el-form-item>
 </el-form>
 </el-col>
 </el-dialog>
+<el-dialog title="新建案件" v-model="dialognewcase">
+<el-col :span="10" :offset="5">
+  <el-form ref="form2" :model="form2" label-width="80px">
 
+<el-form-item label="案件名称">
+  <el-input v-model="form2.name"></el-input>
+</el-form-item>
+
+<el-form-item label="是否重点">
+  <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
+</el-form-item>
+<el-form-item>
+  <el-button type="primary" @click="onSubmit2">立即创建</el-button>
+  <el-button  @click="dialognewcase = false">取消</el-button>
+</el-form-item>
+</el-form>
+</el-col>
+</el-dialog>
 </el-row>
 </template>
 <script>
+Date.prototype.Format = function (fmt) {
+  var o = {
+    "y+": this.getFullYear(),
+    "M+": this.getMonth() + 1,                 //月份
+    "d+": this.getDate(),                    //日
+    "h+": this.getHours(),                   //小时
+    "m+": this.getMinutes(),                 //分
+    "s+": this.getSeconds(),                 //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S+": this.getMilliseconds()             //毫秒
+  };
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)){
+      if(k == "y+"){
+        fmt = fmt.replace(RegExp.$1, ("" + o[k]).substr(4 - RegExp.$1.length));
+      }
+      else if(k=="S+"){
+        var lens = RegExp.$1.length;
+        lens = lens==1?3:lens;
+        fmt = fmt.replace(RegExp.$1, ("00" + o[k]).substr(("" + o[k]).length - 1,lens));
+      }
+      else{
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+      }
+    }
+  }
+  return fmt;
+}
   export default {
     created() {
       axios.get('api/allcase')
       .then(response => {
+        let k = response.data;
+        let i=0;
+        while (k[i]!=null) {
+          let option={
+            value:k[i].id,
+            label:k[i].name,
+          };
+          console.log(option);
+          this.options.push(option);
+          i++;
+        }
         console.log(response.data);
       })
     },
     data() {
       return {
-        value:'',
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        value:null,
+        options: [],
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          label:null,
+          lng: '',
+          lat: '',
+          date:'',
+          delivery:false,
         },
+        form2: {
+          name: '',
+        },
+        tableData: [],
         dialogFormVisible: false,
-        // fileList: []
-        fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+        dialognewcase: false,
+        fileList: []
+        // fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
       };
     },
     methods: {
+      select(){
+        console.log(this.value);
+        axios.get('api/allvideo/'+this.value)
+        .then(response => {
+          // console.log(response.data);
+          this.tableData=response.data;
+        })
+      },
       success(response, file, fileList) {
-        console.log(response);
-        console.log(file);
+        this.form.name=file.name;
+        this.form.label=response;
+        // console.log(response);
+        // console.log(file);
         this.dialogFormVisible=true;
       },
       submitUpload() {
         this.$refs.upload.submit();
       },
       onSubmit() {
-        console.log(this.fileList);
-        console.log('submit!');
+        console.log(this.form.date);
+        axios.post('api/addvideo',{
+          name:this.form.name,
+          lng:this.form.lng,
+          lat:this.form.lat,
+          start: (new Date(this.form.date)).Format("yyyy-MM-dd hh:mm:ss"),
+          label:this.form.label,
+          status:"未处理",
+          lawcase_id:this.value,
+        }).then(response => {
+          this.tableData.push(response.data)
+          console.log(response.data);
+        })
+      },
+      onSubmit2() {
+        axios.post('api/addcase',{
+          name: this.form2.name
+        }).then(response=>{
+          let option={
+            value:response.data.id,
+            label:response.data.name,
+          };
+          this.options.push(option);
+          this.value=response.data.id;
+          this.dialognewcase=false;
+          // console.log("ok");
+          // console.log(response.data);
+
+        })
       },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
       handlePreview(file) {
         console.log(file);
+      },
+      newcase(){
+        this.dialognewcase=true;
       }
     }
   }

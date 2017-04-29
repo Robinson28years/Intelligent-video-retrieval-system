@@ -22,6 +22,12 @@ try {
  import ElementUI from 'element-ui'
  import 'element-ui/lib/theme-default/index.css'
  import VueRouter from 'vue-router';
+ import AMap from 'vue-amap';
+ AMap.initAMapApiLoader({
+  key: '866fa17c34647f2d8ff9bf6deb5c4504',
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor']
+  });
+  Vue.use(AMap);
  // import App from './App.vue'
 
  Vue.use(ElementUI)

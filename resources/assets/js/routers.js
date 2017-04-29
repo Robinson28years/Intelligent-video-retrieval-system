@@ -7,11 +7,11 @@ let routes =[
 				redirect:'/1'
 			},
 			{
-				path: '/1',
-				component: require('./components/Example.vue')
+				path: '/3',
+				component: require('./components/map.vue')
 			},
       {
-				path: '/2',
+				path: '/1',
 				component: require('./components/upload.vue')
 			},
 ];

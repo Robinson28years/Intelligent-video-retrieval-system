@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/upload', 'QiniuController@upload');
 Route::get('/allcase', 'VideoController@allCase');
 Route::post('/addcase','VideoController@addCase');
+Route::post('/addvideo','VideoController@addVideo');
+Route::get('/allvideo/{id}', 'VideoController@allVideo');
