@@ -89302,6 +89302,12 @@ module.exports = g;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_amap__ = __webpack_require__(126);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_amap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_amap__);
+//
+//
+//
+//
 //
 //
 //
@@ -89311,14 +89317,76 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+var amapManager = new __WEBPACK_IMPORTED_MODULE_0_vue_amap__["AMapManager"]();
+var POLYGON_ID = 'POLYGON_ID';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'demoComponent',
+  created: function created() {
+    var _this = this;
+
+    axios.get('api/allvideo/1').then(function (response) {
+      var k = response.data;
+      var i = 0;
+      while (k[i] != null) {
+        var marker = {
+          position: [k[i].lng, k[i].lat],
+          events: {
+            click: function click() {
+              alert('click marker2');
+            }
+          },
+          visible: true,
+          draggable: false
+        };
+        var polygon = [k[i].lng, k[i].lat];
+        console.log(polygon);
+        _this.polyline.path.push(polygon);
+        _this.markers.push(marker);
+        i = i + 1;
+      }
+    });
+  },
+  data: function data() {
+    return {
+      zoom: 12,
+      amapManager: amapManager,
+      center: [121.5273285, 31.25515044],
+      polyline: {
+        vid: POLYGON_ID,
+        path: [],
+        events: {
+          click: function click(e) {
+            console.log(e);
+            alert('click polyline');
+          },
+
+          end: function end(e) {
+            var newPath = e.target.getPath().map(function (point) {
+              return [point.lng, point.lat];
+            });
+            // console.log(newPath);
+          }
+        },
+        editable: false
+      },
+      markers: []
+    };
+  },
+
+  methods: {
+    changeEditable: function changeEditable() {
+      this.polyline.editable = !this.polyline.editable;
+    }
+  }
+});
 
 /***/ }),
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(9)();
-exports.push([module.i, "\n#amap-cointainer {\r\n  height: 800px;\n}\r\n", ""]);
+exports.push([module.i, "\n#demoComponent {\r\n  height: 800px;\n}\r\n", ""]);
 
 /***/ }),
 /* 129 */
@@ -89364,16 +89432,41 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    staticClass: "demo-component",
     attrs: {
-      "id": "amap-cointainer"
+      "id": "demoComponent"
     }
   }, [_c('el-amap', {
     attrs: {
       "vid": "amap",
       "zoom": _vm.zoom,
-      "center": _vm.center
+      "center": _vm.center,
+      "amapManager": _vm.amapManager
     }
-  })], 1)
+  }, [_c('el-amap-polyline', {
+    attrs: {
+      "editable": _vm.polyline.editable,
+      "path": _vm.polyline.path,
+      "events": _vm.polyline.events
+    }
+  }), _vm._v(" "), _vm._l((_vm.markers), function(marker) {
+    return _c('div', [_c('el-amap-marker', {
+      attrs: {
+        "position": marker.position,
+        "events": marker.events,
+        "visible": marker.visible,
+        "draggable": marker.draggable
+      }
+    })], 1)
+  })], 2), _vm._v(" "), _c('button', {
+    attrs: {
+      "type": "button",
+      "name": "button"
+    },
+    on: {
+      "click": _vm.changeEditable
+    }
+  }, [_vm._v("change editable")])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
